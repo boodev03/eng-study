@@ -24,10 +24,6 @@ export async function signInWithCredentials(email: string, password: string) {
     return { data, error };
 }
 
-/**
- * Signs out the current user
- * @returns Result of the signout operation
- */
 export async function signOut() {
     const supabase = await createClient();
 

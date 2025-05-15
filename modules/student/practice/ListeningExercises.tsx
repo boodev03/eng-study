@@ -18,7 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Congratulations from "@/components/Congratulations";
 import ExercisesLoading from "./ExercisesLoading";
 
-export default function Exercises() {
+export default function ListeningExercises() {
   const { id } = useParams();
   const { exercises, isLoading, isError } = useListeningExercises({
     categoryId: id as string,

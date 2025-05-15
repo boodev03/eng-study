@@ -1,11 +1,10 @@
 "use client";
 
 import { useCategories } from "@/hooks/useListeningCategory";
-import CategoryCard from "./CategoryCard";
-import { Loader2 } from "lucide-react";
 import CategoriesLoading from "./CategoriesLoading";
+import CategoryCard from "./CategoryCard";
 
-export default function Categories() {
+export default function ListeningCategories() {
   const { categories, isLoading, isError } = useCategories();
 
   if (isLoading) {

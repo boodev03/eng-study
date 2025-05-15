@@ -16,7 +16,7 @@ import * as z from "zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { signUpWithCredentials } from "@/utils/supabase/services/auth-services";
+import { signUpWithCredentials } from "@/utils/supabase/services/auth.service";
 
 const formSchema = z
   .object({

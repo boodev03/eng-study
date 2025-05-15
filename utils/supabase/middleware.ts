@@ -30,6 +30,25 @@ export async function updateSession(request: NextRequest) {
     // refreshing the auth token
     const { data: { user } } = await supabase.auth.getUser()
 
+    // Check user role and redirect accordingly
+    if (user) {
+        const role = user.user_metadata?.role
+        const currentPath = request.nextUrl.pathname
+
+        if (role === 'student' && !currentPath.startsWith('/student')) {
+            return NextResponse.redirect(new URL('/student', request.url))
+        }
+
+        if (role === 'teacher' && !currentPath.startsWith('/teacher')) {
+            return NextResponse.redirect(new URL('/teacher', request.url))
+        }
+
+        if (role !== 'student' && role !== 'teacher' && currentPath !== '/permission-denied') {
+            return NextResponse.redirect(new URL('/permission-denied', request.url))
+        }
+
+    }
+
     // Check if user is trying to access auth pages while logged in
     const isAuthPage = request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register'
     if (user && isAuthPage) {

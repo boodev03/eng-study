@@ -11,7 +11,6 @@ export function Logo() {
         height={50}
         className="size-[50px]"
       />
-      <p className="text-2xl font-bold">EngStudy</p>
     </Link>
   );
 }

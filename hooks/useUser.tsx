@@ -1,4 +1,4 @@
-import { getUser } from "@/utils/supabase/services/auth-services";
+import { getUser } from "@/utils/supabase/services/auth.service";
 import { useQuery } from "@tanstack/react-query";
 
 export const useUser = () => {

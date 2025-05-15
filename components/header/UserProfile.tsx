@@ -1,15 +1,17 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useUser } from "@/hooks/useUser";
-import { signOut } from "@/utils/supabase/services/auth-services";
-import { ChevronDown, User } from "lucide-react";
+import { signOut } from "@/utils/supabase/services/auth.service";
+import { ChevronDown, LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -17,7 +19,7 @@ export function UserProfile() {
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
   const { user } = useUser();
-  // This function will be called when the user clicks the logout button
+
   const handleSignOut = async () => {
     setIsLoading(true);
     await signOut();
@@ -27,34 +29,82 @@ export function UserProfile() {
 
   if (!user) return null;
 
+  // Get first character of name or email for fallback
+  const getInitials = () => {
+    const name =
+      user.user_metadata?.name ||
+      user.user_metadata?.full_name ||
+      user.email ||
+      "U";
+    return name.charAt(0).toUpperCase();
+  };
+
+  // Get display name (prioritize name over email)
+  const getDisplayName = () => {
+    return (
+      user.user_metadata?.name ||
+      user.user_metadata?.full_name ||
+      user.email?.split("@")[0] ||
+      "User"
+    );
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-9 px-3 rounded-md hover:bg-accent">
-          <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary/10">
-              <User className="h-4 w-4 text-primary" />
-            </div>
-            <ChevronDown className="h-4 w-4 text-muted-foreground" />
+        <Button
+          variant="ghost"
+          className="h-12 px-3 rounded-full hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring transition-all duration-200"
+        >
+          <div className="flex items-center gap-3">
+            <Avatar className="h-8 w-8">
+              <AvatarImage
+                src={user.user_metadata?.avatar_url}
+                alt={`${getDisplayName()}'s avatar`}
+              />
+              <AvatarFallback className="bg-primary text-primary-foreground font-semibold text-sm">
+                {getInitials()}
+              </AvatarFallback>
+            </Avatar>
+            <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
           </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 z-[99999999]" align="end">
-        <div className="flex items-center gap-3 p-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-            <User className="h-5 w-5 text-primary" />
-          </div>
-          <div className="flex flex-col">
-            <p className="text-sm font-medium">{user.email}</p>
-            <p className="text-xs text-muted-foreground">Your account</p>
+      <DropdownMenuContent className="w-64 p-2" align="end">
+        <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+          <Avatar className="h-12 w-12">
+            <AvatarImage
+              src={user.user_metadata?.avatar_url}
+              alt={`${getDisplayName()}'s avatar`}
+            />
+            <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+              {getInitials()}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col min-w-0">
+            <p className="text-sm font-semibold text-foreground truncate">
+              {getDisplayName()}
+            </p>
+            <p className="text-xs text-muted-foreground truncate">
+              {user.email}
+            </p>
+            {user.user_metadata?.role && (
+              <p className="text-xs text-primary font-medium capitalize">
+                {user.user_metadata.role}
+              </p>
+            )}
           </div>
         </div>
+
+        <DropdownMenuSeparator className="my-2" />
+
         <DropdownMenuItem
           onClick={handleSignOut}
-          className="cursor-pointer"
+          className="cursor-pointer text-destructive focus:text-destructive hover:bg-destructive/10 rounded-md p-3 transition-colors"
           disabled={isLoading}
         >
-          Logout
+          <LogOut className="h-4 w-4 mr-3" />
+          {isLoading ? "Signing out..." : "Sign out"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

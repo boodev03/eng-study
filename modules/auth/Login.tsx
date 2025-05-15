@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { signInWithCredentials } from "@/utils/supabase/services/auth-services";
+import { signInWithCredentials } from "@/utils/supabase/services/auth.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyhole, Mail } from "lucide-react";
 import Link from "next/link";
@@ -117,7 +117,6 @@ export default function Login() {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
       <div className="bg-white border border-border-gray rounded-[4px] shadow-sm p-8 w-full max-w-md flex flex-col items-center">
-        <img src="/logo.png" alt="Logo" className="h-16 w-16 mb-4" />
         <p className="text-2xl font-bold mb-4 text-dark">
           Login to EngStudy Center
         </p>
@@ -142,7 +141,7 @@ export default function Login() {
                       <Input
                         type="email"
                         placeholder="Enter your email"
-                        className="h-10"
+                        className="h-10 border-border-gray shadow-none"
                         disabled={isLoading}
                         {...field}
                       />
@@ -165,7 +164,7 @@ export default function Login() {
                         type="password"
                         placeholder="6+ Characters"
                         disabled={isLoading}
-                        className="h-10"
+                        className="h-10 border-border-gray shadow-none"
                         {...field}
                       />
                     </FormControl>
@@ -195,7 +194,7 @@ export default function Login() {
                 </div>
               )}
             />
-            <Button type="submit" disabled={isLoading} className="w-full">
+            <Button type="submit" disabled={isLoading} className="w-full mt-4">
               {isLoading ? "Logging in..." : "Login"}
             </Button>
           </form>

@@ -172,3 +172,27 @@
     @apply cursor-pointer;
   }
 }
+
+.fc .fc-button-primary {
+  background: #FF6400 !important;
+  border: 1px solid #FF6400 !important;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 6px;
+  box-shadow: none;
+  transition: background 0.2s;
+}
+
+.fc .fc-button-primary:hover,
+.fc .fc-button-primary:focus {
+  background: #e55a00 !important;
+  border-color: #e55a00 !important;
+  color: #fff !important;
+}
+
+.fc .fc-button-primary:disabled {
+  background: #d1d5db !important;
+  border-color: #d1d5db !important;
+  color: #fff !important;
+  opacity: 0.7;
+}
