@@ -2,7 +2,7 @@ import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
 import { NextRequest, NextResponse } from "next/server";
 
-const model = google('gemini-2.5-pro-exp-03-25');
+const model = google('gemini-2.0-flash');
 
 export async function POST(request: NextRequest) {
     try {

@@ -29,23 +29,22 @@ export default function FillInBlank() {
   const [difficulty, setDifficulty] = useState<string>("medium");
   const [numberOfSentences, setNumberOfSentences] = useState<number>(20);
   const [exercises, setExercises] = useState<Exercise[]>([
-    {
-      sentence: "The cat sat on the ___ mat.",
-      answers: ["red"],
-    },
-    {
-      sentence: "She ___ to the store yesterday.",
-      answers: ["went"],
-    },
-    {
-      sentence: "I ___ to ___ books in my free time.",
-      answers: ["like", "read"],
-    },
+    // {
+    //   sentence: "The cat sat on the ___ mat.",
+    //   answers: ["red"],
+    // },
+    // {
+    //   sentence: "She ___ to the store yesterday.",
+    //   answers: ["went"],
+    // },
+    // {
+    //   sentence: "I ___ to ___ books in my free time.",
+    //   answers: ["like", "read"],
+    // },
   ]);
   const [userAnswers, setUserAnswers] = useState<string[][]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentExercise, setCurrentExercise] = useState<number>(0);
 
   const {
     complete,
@@ -91,13 +90,12 @@ export default function FillInBlank() {
     blankIndex: number,
     value: string
   ) => {
-    const newAnswers = [...userAnswers];
+    const newAnswers = [...(userAnswers || [])];
     if (!newAnswers[index]) {
       newAnswers[index] = [];
     }
     newAnswers[index][blankIndex] = value;
     setUserAnswers(newAnswers);
-    setCurrentExercise(index);
   };
 
   const handleSubmit = () => {
@@ -105,7 +103,7 @@ export default function FillInBlank() {
   };
 
   const getScore = () => {
-    if (!isSubmitted) return 0;
+    if (!isSubmitted || !userAnswers) return 0;
     return exercises.reduce((score, exercise, index) => {
       const isAllCorrect = exercise.answers.every((answer, blankIndex) => {
         const userAnswer = userAnswers[index]?.[blankIndex] || "";
@@ -144,9 +142,9 @@ export default function FillInBlank() {
             <div className="lg:col-span-1">
               <StatsBoard
                 totalEx={exercises.length}
-                completedEx={userAnswers
+                completedEx={(userAnswers || [])
                   .map((answers, index) =>
-                    answers.some((answer) => answer.trim()) ? index : -1
+                    answers?.some((answer) => answer?.trim()) ? index : -1
                   )
                   .filter((index) => index !== -1)}
               />
@@ -154,7 +152,7 @@ export default function FillInBlank() {
             <div className="lg:col-span-3 flex-1 flex-col flex">
               <ExerciseList
                 exercises={exercises}
-                userAnswers={userAnswers}
+                userAnswers={userAnswers || []}
                 isSubmitted={isSubmitted}
                 onAnswerChange={handleAnswerChange}
               />
@@ -176,9 +174,11 @@ export default function FillInBlank() {
                   <Button
                     onClick={handleSubmit}
                     disabled={
-                      userAnswers.some((answers) =>
-                        answers.some((answer) => !answer.trim())
-                      ) || exercises.length === 0
+                      !userAnswers?.length ||
+                      userAnswers.some(
+                        (answers) => !answers?.some((answer) => answer?.trim())
+                      ) ||
+                      exercises.length === 0
                     }
                   >
                     <Send className="mr-2 h-4 w-4" />

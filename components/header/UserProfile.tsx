@@ -82,9 +82,6 @@ export function UserProfile() {
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col min-w-0">
-            <p className="text-sm font-semibold text-foreground truncate">
-              {getDisplayName()}
-            </p>
             <p className="text-xs text-muted-foreground truncate">
               {user.email}
             </p>

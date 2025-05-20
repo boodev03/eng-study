@@ -123,6 +123,22 @@ export class LessonDetailService implements ILessonDetailService {
             return { data: null, error: error as Error };
         }
     }
+
+    async getLessonDetailByCourseId(
+        courseId: string
+    ): Promise<{ data: LessonDetail[] | null; error: Error | null }> {
+        try {
+            const { data, error } = await this.supabase
+                .from("lesson_details")
+                .select("*, lesson_assignments(*, lesson_submissions(*, students(*)))")
+                .eq("course_id", courseId)
+                .order("start_time", { ascending: true });
+            if (error) throw error;
+            return { data: data || null, error: null };
+        } catch (error) {
+            return { data: null, error: error as Error };
+        }
+    }
 }
 
 export const lessonDetailService = new LessonDetailService();

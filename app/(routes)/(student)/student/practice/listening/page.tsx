@@ -1,5 +1,5 @@
-import ListeningExercises from "@/modules/student/practice/ListeningExercises";
+import ListeningCategories from "@/modules/student/practice/ListeningCategories";
 
 export default function ListeningPage() {
-  return <ListeningExercises />;
+  return <ListeningCategories />;
 }

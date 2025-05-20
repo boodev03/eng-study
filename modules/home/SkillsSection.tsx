@@ -33,7 +33,7 @@ const skills = [
     color: "purple",
     icon: "/icons/writing-icon.png",
     bgGradient: "from-purple-50 to-purple-100",
-    href: "/exercises/writing",
+    href: "/exercises/writting",
   },
   {
     letter: "V",

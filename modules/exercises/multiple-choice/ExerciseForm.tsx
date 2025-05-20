@@ -19,37 +19,37 @@ interface ExerciseFormProps {
 
 const difficultyOptions = {
   beginner: {
-    title: "Sơ cấp",
+    title: "Beginner",
     level: "A1-A2",
     description:
-      "Câu đơn giản với từ vựng cơ bản. Phù hợp cho người học trình độ A1-A2.",
+      "Simple sentences with basic vocabulary. Suitable for A1-A2 level learners.",
   },
   intermediate: {
-    title: "Trung cấp",
+    title: "Intermediate",
     level: "B1-B2",
     description:
-      "Câu có độ phức tạp vừa phải với các cách diễn đạt thông dụng. Phù hợp cho người học trình độ B1-B2.",
+      "Moderately complex sentences with common expressions. Suitable for B1-B2 level learners.",
   },
   advanced: {
-    title: "Cao cấp",
+    title: "Advanced",
     level: "C1-C2",
     description:
-      "Câu phức tạp với từ vựng tinh tế. Phù hợp cho người học trình độ C1-C2.",
+      "Complex sentences with sophisticated vocabulary. Suitable for C1-C2 level learners.",
   },
 };
 
 const exerciseCounts = {
   5: {
-    title: "5 bài",
-    description: "Luyện tập nhanh",
+    title: "5 exercises",
+    description: "Quick practice",
   },
   10: {
-    title: "10 bài",
-    description: "Luyện tập tiêu chuẩn",
+    title: "10 exercises",
+    description: "Standard practice",
   },
   20: {
-    title: "20 bài",
-    description: "Luyện tập toàn diện",
+    title: "20 exercises",
+    description: "Comprehensive practice",
   },
 };
 
@@ -73,28 +73,28 @@ export default function ExerciseForm({
   };
 
   return (
-    <div className="flex justify-center items-center p-4 min-h-[calc(100vh-4rem)]">
+    <div className="flex justify-center items-center p-4">
       <Card className="w-full max-w-3xl h-fit">
         <CardHeader>
           <CardTitle className="text-center text-xl font-semibold">
-            Tạo Bài Tập Trắc Nghiệm
+            Create Multiple Choice Exercise
           </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label className="text-sm font-medium">Chủ đề</Label>
+              <Label className="text-sm font-medium">Topic</Label>
               <Input
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Nhập chủ đề (ví dụ: thói quen hàng ngày, du lịch, ẩm thực)"
+                placeholder="Enter topic (e.g., daily habits, travel, food)"
                 className="h-10"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-sm font-medium">Độ khó</Label>
+              <Label className="text-sm font-medium">Difficulty</Label>
               <RadioGroup
                 value={difficulty}
                 onValueChange={(
@@ -131,7 +131,7 @@ export default function ExerciseForm({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-sm font-medium">Số lượng bài tập</Label>
+              <Label className="text-sm font-medium">Number of Exercises</Label>
               <RadioGroup
                 value={numberOfSentences.toString()}
                 onValueChange={(value) =>
@@ -166,10 +166,10 @@ export default function ExerciseForm({
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Đang tạo bài tập...
+                  Creating exercises...
                 </>
               ) : (
-                "Tạo bài tập"
+                "Create exercises"
               )}
             </Button>
           </form>

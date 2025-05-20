@@ -2,7 +2,6 @@
 
 import { useUser } from "@/hooks/useUser";
 import { Logo } from "./header/Logo";
-import { UserProfile } from "./header/UserProfile";
 import Navbar from "./Navbar";
 
 export default function Header() {

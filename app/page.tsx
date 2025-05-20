@@ -1,5 +1,5 @@
-import Home from "@/modules/home/Home";
+import Login from "@/modules/auth/Login";
 
 export default function HomePage() {
-  return <Home />;
+  return <Login />;
 }

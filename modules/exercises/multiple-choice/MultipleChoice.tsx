@@ -12,8 +12,8 @@ import ExerciseList from "./ExerciseList";
 
 interface Exercise {
   sentence: string;
-  options: string[][]; // Mỗi chỗ trống có một mảng options
-  answers: string[]; // Đáp án cho từng chỗ trống
+  options: string[][]; // Each blank has an array of options
+  answers: string[]; // Answers for each blank
 }
 
 interface ParsedExercise {
@@ -84,7 +84,7 @@ export default function MultipleChoice() {
       await complete("Create multiple choice exercises", {
         body: {
           ...formData,
-          type: "multiple-choice",
+          type: "multiple_choice",
         },
       });
     } catch (error) {
@@ -115,7 +115,7 @@ export default function MultipleChoice() {
             <div className="lg:col-span-3 flex-1 flex-col flex">
               {isLoading && exercises.length === 0 ? (
                 <div className="flex items-center justify-center h-full">
-                  <p className="text-lg text-gray-600">Đang tạo bài tập...</p>
+                  <p className="text-lg text-gray-600">Creating exercises...</p>
                 </div>
               ) : (
                 <>
@@ -129,14 +129,14 @@ export default function MultipleChoice() {
                     {isSubmitted ? (
                       <div className="flex items-center gap-4">
                         <div className="text-lg font-medium">
-                          Điểm số:{" "}
+                          Score:{" "}
                           <span className="text-blue-600">
                             {getScore()}/{exercises.length}
                           </span>
                         </div>
                         <Button onClick={() => setExercises([])}>
                           <RefreshCw className="mr-2 h-4 w-4" />
-                          Tạo bài mới
+                          Create New Exercise
                         </Button>
                       </div>
                     ) : (
@@ -149,7 +149,7 @@ export default function MultipleChoice() {
                         }
                       >
                         <Send className="mr-2 h-4 w-4" />
-                        Nộp bài
+                        Submit
                       </Button>
                     )}
                   </div>

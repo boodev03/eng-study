@@ -86,7 +86,7 @@ export default function SentenceArrangement() {
       await complete("Create sentence arrangement exercises", {
         body: {
           ...formData,
-          type: "sentence-reordering",
+          type: "sentence_reordering",
         },
       });
     } catch (error) {

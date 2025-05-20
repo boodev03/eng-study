@@ -2,8 +2,15 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
+    // Skip middleware for API routes
+    if (request.nextUrl.pathname.startsWith('/api')) {
+        return NextResponse.next()
+    }
+
     let supabaseResponse = NextResponse.next({
-        request,
+        request: {
+            headers: request.headers,
+        },
     })
 
     const supabase = createServerClient(
@@ -46,7 +53,6 @@ export async function updateSession(request: NextRequest) {
         if (role !== 'student' && role !== 'teacher' && currentPath !== '/permission-denied') {
             return NextResponse.redirect(new URL('/permission-denied', request.url))
         }
-
     }
 
     // Check if user is trying to access auth pages while logged in

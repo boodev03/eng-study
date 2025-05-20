@@ -3,16 +3,29 @@
 import { usePathname } from "next/navigation";
 import { UserProfile } from "./header/UserProfile";
 import Link from "next/link";
-
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Courses", href: "/courses" },
-  { label: "Practice", href: "/student/practice" },
-];
+import { useUser } from "@/hooks/useUser";
+import { useMemo } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { user } = useUser();
 
+  const navItems = useMemo(() => {
+    const role = user?.user_metadata?.role;
+    const items = [
+      { label: "Home", href: "/" },
+      {
+        label: "Courses",
+        href: role === "teacher" ? "/teacher/courses" : "/student/courses",
+      },
+    ];
+
+    if (role === "student") {
+      items.push({ label: "Practice", href: "/student/practice" });
+    }
+
+    return items;
+  }, [user]);
   return (
     <nav className="flex items-center gap-4">
       {/* Menu */}
