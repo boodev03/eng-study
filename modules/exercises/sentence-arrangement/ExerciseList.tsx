@@ -86,7 +86,7 @@ export default function ExerciseList({
                     {/* Available Words Section */}
                     <div className="space-y-2">
                       <div className="text-sm text-gray-500 font-medium">
-                        Từ có sẵn:
+                        Available Words:
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {availableWords.map((word, wordIndex) => (
@@ -105,7 +105,7 @@ export default function ExerciseList({
                     {/* Answer Section */}
                     <div className="space-y-2">
                       <div className="text-sm text-gray-500 font-medium">
-                        Sắp xếp câu:
+                        Arrange the sentence:
                       </div>
                       <DragDropContext
                         onDragEnd={(result) => handleDragEnd(result, index)}
@@ -122,7 +122,8 @@ export default function ExerciseList({
                             >
                               {currentAnswer.length === 0 && (
                                 <div className="text-sm text-gray-400 italic">
-                                  Kéo thả từ vào đây để sắp xếp câu
+                                  Drag and drop words here to arrange the
+                                  sentence
                                 </div>
                               )}
                               {currentAnswer.map((word, wordIndex) => (
@@ -176,8 +177,8 @@ export default function ExerciseList({
                           )}
                           <span>
                             {isCorrect(index)
-                              ? "Chính xác!"
-                              : `Đáp án đúng: ${exercise.correctSentence}`}
+                              ? "Correct!"
+                              : `Correct answer: ${exercise.correctSentence}`}
                           </span>
                         </div>
                       </motion.div>

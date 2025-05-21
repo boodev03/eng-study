@@ -12,7 +12,7 @@ export default function CategoryCard({ category }: IProps) {
   const exercisesCount = exercises_count?.[0]?.count || 0;
 
   return (
-    <Link href={`/exercises/listening/${id}`}>
+    <Link href={`/student/practice/listening/${id}`}>
       <Card className="overflow-hidden transition-all hover:shadow-md gap-0 py-2 border-gray-300 cursor-pointer">
         <CardHeader className="gap-0">
           <CardTitle className="text-lg font-medium">{`${type} ${index}`}</CardTitle>

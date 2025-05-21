@@ -51,6 +51,7 @@ export async function updateSession(request: NextRequest) {
         }
 
         if (role !== 'student' && role !== 'teacher' && currentPath !== '/permission-denied') {
+            await supabase.auth.signOut()
             return NextResponse.redirect(new URL('/permission-denied', request.url))
         }
     }

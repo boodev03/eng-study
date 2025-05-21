@@ -166,7 +166,7 @@ export default function ExerciseItem({
                 transition={{ delay: 0.3 }}
                 className="text-sm text-red-600 mt-2"
               >
-                Đáp án đúng:{" "}
+                Correct answer:{" "}
                 <span className="font-medium">
                   {exercise.answers.map((answer) => `[${answer}]`).join(" ")}
                 </span>
@@ -188,12 +188,12 @@ export default function ExerciseItem({
                       className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                     >
                       <HelpCircle className="h-4 w-4 mr-1" />
-                      Giải thích
+                      Explain
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Chọn ngôn ngữ giải thích</DialogTitle>
+                      <DialogTitle>Select explanation language</DialogTitle>
                     </DialogHeader>
                     <div className="py-4">
                       <Select
@@ -223,7 +223,7 @@ export default function ExerciseItem({
                 animate={{ opacity: 1 }}
                 className="mt-2 p-3 bg-gray-50 rounded-lg text-sm text-gray-700"
               >
-                Đang xử lý...
+                Processing...
               </motion.div>
             )}
 

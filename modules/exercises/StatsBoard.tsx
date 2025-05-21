@@ -19,7 +19,7 @@ export default function StatsBoard({ totalEx, completedEx }: StatsBoardProps) {
         {/* Progress Section */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <h3 className="text-base font-medium">Tiến độ</h3>
+            <h3 className="text-base font-medium">Progress</h3>
             <span className="text-lg font-medium">{Math.round(progress)}%</span>
           </div>
           <Progress value={progress} className="h-2" />
@@ -27,7 +27,7 @@ export default function StatsBoard({ totalEx, completedEx }: StatsBoardProps) {
 
         {/* Exercise Status */}
         <div className="space-y-3">
-          <h3 className="text-base font-medium">Câu hỏi</h3>
+          <h3 className="text-base font-medium">Questions</h3>
           <div className="grid grid-cols-5 gap-2">
             {Array.from({ length: totalEx }).map((_, index) => {
               const isCompleted = completedEx.includes(index);

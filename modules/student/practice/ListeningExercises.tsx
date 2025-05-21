@@ -1,21 +1,15 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { useListeningExercises } from "@/hooks/useListeningExercises";
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import Congratulations from "@/components/Congratulations";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useListeningExercises } from "@/hooks/useListeningExercises";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import ExercisesLoading from "./ExercisesLoading";
 
 export default function ListeningExercises() {

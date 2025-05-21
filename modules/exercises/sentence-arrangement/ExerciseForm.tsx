@@ -56,7 +56,7 @@ export default function ExerciseForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 bg-white p-6 rounded-lg shadow-sm border"
+        className="space-y-6 bg-white p-6 rounded-lg shadow-sm border block min-w-3xl"
       >
         <FormField
           control={form.control}

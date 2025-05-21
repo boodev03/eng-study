@@ -26,7 +26,7 @@ const exercises = [
     description:
       "Arrange the words to form complete and grammatically correct sentences.",
     icon: AlignLeft,
-    href: "/student/practice/exercises/sentence-arrange",
+    href: "/student/practice/exercises/sentence-arrangement",
   },
 ];
 
