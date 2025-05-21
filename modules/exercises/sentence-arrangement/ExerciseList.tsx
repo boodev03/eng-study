@@ -26,7 +26,7 @@ export default function ExerciseList({
     if (!isSubmitted) return null;
     const userAnswer = userAnswers[index]?.join(" ") || "";
     return (
-      exercises[index].correctSentence.toLowerCase() ===
+      exercises[index].correctSentence.toLowerCase().replace(/\.$/, "") ===
       userAnswer.toLowerCase()
     );
   };

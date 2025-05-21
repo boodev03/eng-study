@@ -1,35 +1,47 @@
 export function parseExercises(text: string): { sentence: string; answers: string[] }[] {
     const exercises: { sentence: string; answers: string[] }[] = [];
     const lines = text.split("\n");
+    let currentExercise: { sentence: string; answers: string[] } | null = null;
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
         if (!line) continue;
 
-        // Tìm tất cả các chỗ trống trong câu
-        const blanks = line.match(/___/g) || [];
-        if (blanks.length === 0) continue;
+        // Check if this is a new exercise (starts with #)
+        if (line.startsWith('#')) {
+            // If we have a complete previous exercise, add it to the list
+            if (currentExercise && currentExercise.answers.length > 0) {
+                exercises.push(currentExercise);
+            }
+            currentExercise = { sentence: '', answers: [] };
+            continue;
+        }
 
-        // Tách câu thành các phần
-        const parts = line.split("___");
-        const sentence = parts.join("___");
+        // Parse sentence line
+        if (line.startsWith('Sentence:')) {
+            const sentence = line.replace('Sentence:', '').trim();
+            if (currentExercise) {
+                currentExercise.sentence = sentence;
+            }
+            continue;
+        }
 
-        // Tìm đáp án cho từng chỗ trống
-        const answers: string[] = [];
-        for (let j = 0; j < blanks.length; j++) {
-            const answerLine = lines[i + j + 1];
-            if (!answerLine) break;
+        // Parse answers line
+        if (line.startsWith('Answers:')) {
+            const answers = line.replace('Answers:', '')
+                .split(',')
+                .map(answer => answer.trim().toLowerCase())
+                .filter(answer => answer.length > 0);
 
-            // Lấy đáp án đầu tiên cho mỗi chỗ trống
-            const answer = answerLine.split(",")[0].trim().toLowerCase();
-            if (answer) {
-                answers.push(answer);
+            if (currentExercise) {
+                currentExercise.answers = answers;
             }
         }
+    }
 
-        if (answers.length === blanks.length) {
-            exercises.push({ sentence, answers });
-        }
+    // Add the last exercise if it exists and is complete
+    if (currentExercise && currentExercise.answers.length > 0) {
+        exercises.push(currentExercise);
     }
 
     return exercises;

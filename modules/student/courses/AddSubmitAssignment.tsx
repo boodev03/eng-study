@@ -18,11 +18,13 @@ import { toast } from "sonner";
 interface AddSubmitAssignmentProps {
   lessonAssignmentId: string;
   studentEmail: string;
+  refetch: () => void;
 }
 
 export default function AddSubmitAssignment({
   lessonAssignmentId,
   studentEmail,
+  refetch,
 }: AddSubmitAssignmentProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,6 +67,7 @@ export default function AddSubmitAssignment({
       // Reset form
       setFiles([]);
       setOpen(false);
+      refetch();
     } catch (error) {
       toast.error("Failed to submit assignment. Please try again.");
     } finally {

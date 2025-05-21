@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import parse from "html-react-parser";
 
 interface Exercise {
   sentence: string;
@@ -216,7 +217,7 @@ export default function ExerciseItem({
                 animate={{ opacity: 1 }}
                 className="mt-2 p-3 bg-gray-50 rounded-lg text-sm text-gray-700"
               >
-                {explainHook.completion}
+                {parse(explainHook.completion)}
               </motion.div>
             )}
           </div>

@@ -71,7 +71,8 @@ export default function SentenceArrangement() {
     if (!isSubmitted) return 0;
     return exercises.reduce((score, exercise, index) => {
       const userAnswer = userAnswers[index]?.join(" ") || "";
-      return exercise.correctSentence.toLowerCase() === userAnswer.toLowerCase()
+      return exercise.correctSentence.toLowerCase().replace(/\.$/, "") ===
+        userAnswer.toLowerCase()
         ? score + 1
         : score;
     }, 0);

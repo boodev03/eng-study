@@ -2,15 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useCompletion } from "@ai-sdk/react";
 import { RefreshCw, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,6 +9,7 @@ import { useEffect, useState } from "react";
 import { parseExercises } from "@/helpers/fill-in-blank";
 import ExerciseList from "./ExerciseList";
 import StatsBoard from "../StatsBoard";
+import ExerciseForm from "./ExerciseForm";
 
 interface Exercise {
   sentence: string;
@@ -25,23 +17,7 @@ interface Exercise {
 }
 
 export default function FillInBlank() {
-  const [topic, setTopic] = useState<string>("general");
-  const [difficulty, setDifficulty] = useState<string>("medium");
-  const [numberOfSentences, setNumberOfSentences] = useState<number>(20);
-  const [exercises, setExercises] = useState<Exercise[]>([
-    // {
-    //   sentence: "The cat sat on the ___ mat.",
-    //   answers: ["red"],
-    // },
-    // {
-    //   sentence: "She ___ to the store yesterday.",
-    //   answers: ["went"],
-    // },
-    // {
-    //   sentence: "I ___ to ___ books in my free time.",
-    //   answers: ["like", "read"],
-    // },
-  ]);
+  const [exercises, setExercises] = useState<Exercise[]>([]);
   const [userAnswers, setUserAnswers] = useState<string[][]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,7 +28,11 @@ export default function FillInBlank() {
     isLoading: isCompletionLoading,
   } = useCompletion();
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (data: {
+    topic: string;
+    difficulty: "easy" | "medium" | "hard";
+    numberOfSentences: number;
+  }) => {
     setIsLoading(true);
     setIsSubmitted(false);
     setUserAnswers([]);
@@ -61,11 +41,7 @@ export default function FillInBlank() {
       const result = await complete(
         "Create a fill in the blank exercise with the following topic, difficulty, and number of sentences: ",
         {
-          body: {
-            topic,
-            difficulty,
-            numberOfSentences,
-          },
+          body: data,
         }
       );
 
@@ -165,7 +141,15 @@ export default function FillInBlank() {
                         {getScore()}/{exercises.length}
                       </span>
                     </div>
-                    <Button onClick={handleGenerate}>
+                    <Button
+                      onClick={() =>
+                        handleGenerate({
+                          topic: "general",
+                          difficulty: "medium",
+                          numberOfSentences: 20,
+                        })
+                      }
+                    >
                       <RefreshCw className="mr-2 h-4 w-4" />
                       Tạo bài mới
                     </Button>
@@ -195,74 +179,10 @@ export default function FillInBlank() {
             exit={{ opacity: 0, y: -20 }}
             className="max-w-3xl mx-auto"
           >
-            <Card className="p-6 mb-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div>
-                  <Label htmlFor="topic" className="mb-2 block">
-                    Chủ đề
-                  </Label>
-                  <Input
-                    id="topic"
-                    placeholder="Nhập chủ đề (tiếng Anh)"
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                    className="w-full"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="difficulty" className="mb-2 block">
-                    Độ khó
-                  </Label>
-                  <Select value={difficulty} onValueChange={setDifficulty}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Chọn độ khó" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="easy">Dễ</SelectItem>
-                      <SelectItem value="medium">Trung bình</SelectItem>
-                      <SelectItem value="hard">Khó</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="numberOfSentences" className="mb-2 block">
-                    Số câu
-                  </Label>
-                  <Select
-                    value={numberOfSentences.toString()}
-                    onValueChange={(value) =>
-                      setNumberOfSentences(parseInt(value))
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Số câu" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="5">5 câu</SelectItem>
-                      <SelectItem value="10">10 câu</SelectItem>
-                      <SelectItem value="20">20 câu</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <Button
-                onClick={handleGenerate}
-                className="w-full"
-                disabled={isLoading || isCompletionLoading}
-              >
-                {isLoading || isCompletionLoading ? (
-                  <>
-                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                    Đang tạo bài tập...
-                  </>
-                ) : (
-                  <>Tạo bài tập</>
-                )}
-              </Button>
-            </Card>
+            <ExerciseForm
+              onSubmit={handleGenerate}
+              isLoading={isLoading || isCompletionLoading}
+            />
           </motion.div>
         )}
       </AnimatePresence>

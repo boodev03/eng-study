@@ -31,6 +31,7 @@ export default function CourseDetail() {
     submission,
     isLoading: isSubmissionLoading,
     isError: isSubmissionError,
+    refetch: refetchSubmission,
   } = useLessonSubmissionByStudentId(
     lessonDetails[0]?.lesson_assignments[0]?.id,
     user?.email as string
@@ -115,6 +116,7 @@ export default function CourseDetail() {
                     <AddSubmitAssignment
                       lessonAssignmentId={lesson.lesson_assignments[0].id}
                       studentEmail={user?.email as string}
+                      refetch={refetchSubmission}
                     />
                     <ViewHomework lessonDetails={[lesson]} />
                     <button
